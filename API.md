@@ -1,4 +1,4 @@
-# Architecture
+# Api
 
 ## Purpose
 This document defines the approved baseline for **osb-services-api-gateway**.
