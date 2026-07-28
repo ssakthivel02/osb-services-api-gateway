@@ -1,0 +1,43 @@
+{
+  "version": "1.0.0",
+  "apiPrefix": "/api/v1",
+  "requestIdHeader": "X-Request-ID",
+  "maxRequestBodyBytes": 1048576,
+  "upstreamTimeoutMilliseconds": 10000,
+  "allowedMethods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  "blockedMethods": ["TRACE", "TRACK", "CONNECT"],
+  "requireHttps": true,
+  "requireAuthenticationByDefault": true,
+  "defaultDenyRoutes": true,
+  "validateIssuer": true,
+  "validateAudience": true,
+  "validateExpiry": true,
+  "validateTenantClaim": true,
+  "tenantClaim": "tenant_id",
+  "allowedJwtAlgorithms": ["RS256", "ES256"],
+  "cors": {
+    "allowCredentials": true,
+    "allowWildcardOrigin": false,
+    "maxAgeSeconds": 600
+  },
+  "rateLimits": {
+    "anonymousRequestsPerMinute": 30,
+    "authenticatedRequestsPerMinute": 300,
+    "privilegedRequestsPerMinute": 120,
+    "burstMultiplier": 2
+  },
+  "securityHeaders": {
+    "strictTransportSecurity": true,
+    "contentTypeOptions": true,
+    "frameOptions": "DENY",
+    "referrerPolicy": "no-referrer",
+    "contentSecurityPolicy": "default-src 'none'; frame-ancestors 'none'"
+  },
+  "logging": {
+    "redactAuthorization": true,
+    "redactCookies": true,
+    "redactQueryKeys": ["token", "access_token", "refresh_token", "code", "password"],
+    "logRequestBody": false,
+    "logResponseBody": false
+  }
+}
