@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "routes": [
+    {"id":"health","path":"/health","methods":["GET"],"authentication":"public","rateLimitClass":"anonymous","upstream":"gateway"},
+    {"id":"readiness","path":"/ready","methods":["GET"],"authentication":"internal","rateLimitClass":"privileged","upstream":"gateway"},
+    {"id":"auth-discovery","path":"/api/v1/auth/discovery","methods":["GET"],"authentication":"public","rateLimitClass":"anonymous","upstream":"auth"},
+    {"id":"profile-self","path":"/api/v1/profiles/me","methods":["GET","PATCH"],"authentication":"required","permissions":["profile:read:self"],"rateLimitClass":"authenticated","upstream":"profiles"},
+    {"id":"content-read","path":"/api/v1/content","methods":["GET"],"authentication":"required","permissions":["content:read"],"rateLimitClass":"authenticated","upstream":"content"},
+    {"id":"tenant-admin","path":"/api/v1/admin/tenants/{tenant_id}","methods":["GET","PATCH"],"authentication":"required","permissions":["tenant:read:self"],"rateLimitClass":"privileged","upstream":"admin"}
+  ]
+}

@@ -1,0 +1,34 @@
+name: Validate Gateway Baseline
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gateway-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validate gateway policy and routes
+        run: python3 scripts/validate_gateway_baseline.py
+      - name: Run negative security cases
+        run: python3 scripts/test_gateway_security_cases.py
+      - name: Compile validators
+        run: python3 -m py_compile scripts/*.py
+      - name: Verify required documents
+        run: |
+          test -f docs/THREAT_MODEL.md
+          test -f docs/GATEWAY_OPERATIONS_RUNBOOK.md
+          test -f docs/PRODUCTION_READINESS.md
+          test -f docs/adr/0001-gateway-security-boundary.md
